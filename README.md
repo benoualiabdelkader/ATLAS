@@ -1,21 +1,22 @@
-# ATLAS - AI Cinematic Production Agent 🎬
+# ATLAS - Agentic Cinematic Production 🎬
 
-> A fully autonomous AI agent designed for cinematic production, generating end-to-end video narratives, character arcs, and cinematic workflows.
+> A fully autonomous AI agent designed for cinematic production, powered by **Gemini Enterprise Agent Platform** and **Replit** for the *Agentic Cinema: The Blockbuster Hackathon*.
 
 ![ATLAS Demo Placeholder](screenshots/demo-placeholder.png)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## 📌 Problem Statement
-Creating high-quality cinematic content requires a combination of screenwriting, directing, voice acting, and video generation. The tools are scattered and the workflows are manual and disjointed, acting as a massive barrier to entry for solo creators and independent studios.
+Creating high-quality cinematic content requires executing complex rendering scripts and data processing pipelines. Setting up these execution environments manually creates friction for enterprise media studios scaling their AI pipelines.
 
 ## 🚀 Solution Overview
-**ATLAS** is an autonomous AI agent that orchestrates the entire cinematic production pipeline. By utilizing a multi-agent architecture, ATLAS automates scriptwriting, storyboarding, voiceover generation, and video synthesis, bringing your cinematic vision to life with minimal manual intervention.
+**ATLAS** is an autonomous AI agent that orchestrates the entire cinematic production pipeline. Built exclusively on **Google Cloud Agent Builder** and powered by **Gemini**, ATLAS acts as the autonomous "Studio Head". It orchestrates story generation and scene breakdowns, and securely executes video rendering scripts in isolated, dynamic sandboxes using our partner platform, **Replit**.
 
-## ✨ Key Features
-- **Script to Screen Pipeline:** Automated breakdown of scripts into discrete scenes and prompts.
-- **Multi-Agent Orchestration:** Specialized agents for Writing, Directing, and Editing.
-- **API Integrations:** Seamlessly connects with OpenAI, Anthropic, ElevenLabs, and video generation models.
-- **Frontend Dashboard:** An intuitive web interface to monitor and interact with the production process.
-- **Extensible Architecture:** Designed to easily plug in new AI models and tools.
+## ✨ Key Features & Hackathon Criteria
+- **Powered by Gemini:** Uses Google's Gemini models for deterministic, multi-step agent reasoning to solve enterprise friction in media pipelines.
+- **Replit Partner Integration:** The Gemini agent dynamically provisions Replit deployments and sandboxes to execute video processing and rendering scripts, demonstrating secure and scalable code execution.
+- **Script to Screen Pipeline:** Automated breakdown of scripts into discrete scenes using Google Cloud Agent Builder.
+- **Open Source:** Fully public repository with an MIT open-source license.
 
 ## 🏗️ Architecture
 
@@ -23,22 +24,23 @@ Creating high-quality cinematic content requires a combination of screenwriting,
 *For a detailed breakdown, please see our [Architecture Documentation](docs/architecture.md).*
 
 ## 💻 Technology Stack
-- **Backend:** Python (FastAPI) / Node.js
+- **AI/Agent Framework:** Gemini Enterprise Agent Platform (Google Cloud)
+- **Partner Integration:** Replit (Dynamic sandbox execution environment)
+- **Backend:** Python (FastAPI)
 - **Frontend:** React / Next.js
-- **AI/Agents:** LangChain / AutoGen
-- **Database:** PostgreSQL
-- **Deployment:** Docker / Google Cloud Platform
+- **Deployment:** Google Cloud Run
 
 ## 🛠️ Installation & Setup
 
 ### Prerequisites
 - Node.js >= 18.x
 - Python >= 3.10
-- Docker & Docker Compose
+- Google Cloud CLI (`gcloud`)
+- Replit Account (with API access)
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/ATLAS.git
+git clone https://github.com/benoualiabdelkader/ATLAS.git
 cd ATLAS
 ```
 
@@ -49,24 +51,25 @@ cp .env.example .env
 ```
 *Note: Make sure never to commit your `.env` file containing real API keys.*
 
-### 3. Running Locally
-Using Docker Compose is the easiest way to get started:
+### 3. Authenticate with Google Cloud
+Ensure your local environment is authenticated to call Google Cloud APIs:
+```bash
+gcloud auth application-default login
+gcloud config set project YOUR_GOOGLE_CLOUD_PROJECT
+```
+
+### 4. Running Locally
+Using Docker Compose:
 ```bash
 docker-compose up --build
 ```
 Alternatively, follow the detailed setup in [docs/setup.md](docs/setup.md).
 
-### 4. Deployment
-For deployment instructions to Google Cloud, please refer to the [Setup Guide](docs/setup.md).
-
-## 🗺️ Roadmap
-See [docs/roadmap.md](docs/roadmap.md) for our upcoming features and long-term vision.
+## 🎥 The 3-Minute Trailer (Demo)
+*Watch our 3-Minute Demo Video on YouTube: [Link Placeholder]*
 
 ## 🤝 Contribution Guidelines
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to get started. By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).
-
-## 🛡️ Security
-If you discover any security-related issues, please refer to our [Security Policy](SECURITY.md).
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details. By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. This license is critical for our Devpost submission.
