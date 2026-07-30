@@ -1,0 +1,26 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build and OS files
+dist/
+build/
+*.log
+.DS_Store
+Thumbs.db
