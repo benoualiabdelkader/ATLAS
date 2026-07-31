@@ -1,81 +1,140 @@
-# Replit AI Execution Plan (Micro-Step Orchestration)
+# ATLAS - Work Breakdown Structure (WBS) & AI Execution Plan
 
 > **CRITICAL INSTRUCTIONS FOR REPLIT AI:**
-> You are building a complex, enterprise-grade application. **DO NOT** attempt to write the entire codebase at once. 
-> You must execute this plan **strictly sequentially**. Do not move to a Step or Phase until the previous one is 100% complete, functional, and error-free.
-> Before writing code for any Phase, you MUST read the referenced `.txt` files in `docs/blueprint/` into your context.
+> This plan is structured as a formal Work Breakdown Structure (WBS). 
+> You must execute the **Leaf Node** tasks sequentially. Do not begin any task until its defined **Predecessors** are completed. 
+> Your progress must follow the 0:100 earning rule (a task is only considered complete when it is 100% functional).
 
 ---
 
-## Phase 1: Project Initialization & Infrastructure
+## 1. Project Root: ATLAS Cinematic Agent
+
+### 1.1 Summary Task: Project Initialization & Infrastructure
 **Prerequisite Reading:** `docs/blueprint/17_File_Structure_(Root_Repository).txt`, `docs/blueprint/14_DevOps.txt`
 
-- **Step 1.1:** Create the base root folders: `/backend` and `/frontend`.
-- **Step 1.2:** Navigate to `/frontend` and initialize a Next.js 14 App Router project with TypeScript and Tailwind CSS. Remove default boilerplate.
-- **Step 1.3:** Navigate to `/backend` and initialize a Python environment. Create a `requirements.txt` containing `fastapi`, `uvicorn`, `sqlalchemy`, `psycopg2-binary`, `pydantic`, `python-jose`, `passlib`, `celery`, and `redis`.
-- **Step 1.4:** Create `backend/main.py` with a basic FastAPI "Hello World" to verify routing.
-- **Step 1.5:** Configure `docker-compose.yml` (if specified) or set up the `.env` file based on `.env.example`.
+- **1.1.1 Leaf Node: Backend Repository Setup**
+  - **Predecessors:** None
+  - **Effort Estimate:** Low
+  - **Action:** Create `/backend`. Initialize Python environment, `requirements.txt` (FastAPI, SQLAlchemy, Pydantic, Celery), and `main.py`.
+  - **Definition of Done (DoD):** FastAPI runs and returns 200 OK on `/`.
 
-## Phase 2: Database Architecture & Models
+- **1.1.2 Leaf Node: Frontend Repository Setup**
+  - **Predecessors:** None
+  - **Effort Estimate:** Low
+  - **Action:** Create `/frontend`. Initialize Next.js 14 App Router with Tailwind CSS and TypeScript.
+  - **DoD:** Next.js dev server starts without errors.
+
+- **1.1.3 Leaf Node: Environment Configuration**
+  - **Predecessors:** 1.1.1, 1.1.2
+  - **Effort Estimate:** Low
+  - **Action:** Set up `.env` files for both frontend and backend based on `.env.example`.
+
+### 1.2 Summary Task: Database Architecture & Models
 **Prerequisite Reading:** `docs/blueprint/6_Database_Design_(PostgreSQL).txt`
 
-- **Step 2.1:** Create `backend/db/session.py` to establish the SQLAlchemy engine and session local using `DATABASE_URL`.
-- **Step 2.2:** Create `backend/db/models.py`.
-- **Step 2.3:** Define the `User` model (id: UUID, email, password_hash, created_at).
-- **Step 2.4:** Define the `Project` model (id, user_id, title, concept, status) with a foreign key to `User`.
-- **Step 2.5:** Define the `Scene` model (id, project_id, scene_number, content, render_status) with a foreign key to `Project`.
-- **Step 2.6:** Define the `ReplitJob` model (id, scene_id, repl_id, code_payload, logs, status).
-- **Step 2.7:** Ensure `ON DELETE CASCADE` is properly configured for all relationships.
+- **1.2.1 Leaf Node: Database Connection**
+  - **Predecessors:** 1.1.1
+  - **Effort Estimate:** Low
+  - **Action:** Create `backend/db/session.py` to establish SQLAlchemy engine.
+  - **DoD:** Database connects successfully on app startup.
 
-## Phase 3: Security & Authentication (Backend)
+- **1.2.2 Leaf Node: Define ORM Models**
+  - **Predecessors:** 1.2.1
+  - **Effort Estimate:** Medium
+  - **Action:** Create models for `User`, `Project`, `Scene`, and `ReplitJob` with UUIDs and exact Foreign Key constraints.
+  - **DoD:** Models validate and tables are successfully generated in PostgreSQL.
+
+### 1.3 Summary Task: Security & Authentication
 **Prerequisite Reading:** `docs/blueprint/8_Authentication.txt`, `docs/blueprint/12_Security.txt`
 
-- **Step 3.1:** Create `backend/core/security.py`. Implement password hashing using `passlib` (bcrypt).
-- **Step 3.2:** Implement JWT creation functions (access token: 15 mins, refresh token: 7 days).
-- **Step 3.3:** Create Pydantic schemas in `backend/schemas/user.py` for Login and Registration payloads.
-- **Step 3.4:** Build `/api/v1/auth/register` endpoint to create a new user.
-- **Step 3.5:** Build `/api/v1/auth/login` endpoint. It MUST set the JWT inside a secure, `HttpOnly` cookie.
+- **1.3.1 Leaf Node: Password Hashing & JWT Utils**
+  - **Predecessors:** 1.1.1
+  - **Effort Estimate:** Low
+  - **Action:** Implement bcrypt hashing and JWT generation in `backend/core/security.py`.
 
-## Phase 4: Core Business API
+- **1.3.2 Leaf Node: Auth Endpoints**
+  - **Predecessors:** 1.2.2, 1.3.1
+  - **Effort Estimate:** Medium
+  - **Action:** Build `/api/v1/auth/register` and `/api/v1/auth/login`. 
+  - **DoD:** Login endpoint sets an `HttpOnly` secure cookie containing the JWT.
+
+### 1.4 Summary Task: Core Business API
 **Prerequisite Reading:** `docs/blueprint/7_API_Specification.txt`, `docs/blueprint/2_Functional_Requirements.txt`
 
-- **Step 4.1:** Create `backend/api/deps.py` to write a dependency function `get_current_user` that validates the JWT cookie.
-- **Step 4.2:** Build POST `/api/v1/projects` to accept a title and concept. Link it to the `current_user`.
-- **Step 4.3:** Build GET `/api/v1/projects` to return only the projects belonging to `current_user`.
-- **Step 4.4:** Build CRUD endpoints for `/api/v1/scenes` (belonging to a specific project).
-- **Step 4.5:** Test all endpoints internally to ensure unauthorized access returns `401 Unauthorized`.
+- **1.4.1 Leaf Node: Auth Middleware**
+  - **Predecessors:** 1.3.2
+  - **Effort Estimate:** Low
+  - **Action:** Build `get_current_user` dependency to protect routes.
 
-## Phase 5: AI Orchestration & External Integrations
+- **1.4.2 Leaf Node: Project CRUD Endpoints**
+  - **Predecessors:** 1.4.1
+  - **Effort Estimate:** Medium
+  - **Action:** Build `/api/v1/projects`. Enforce user isolation (return only user's projects).
+
+- **1.4.3 Leaf Node: Scene CRUD Endpoints**
+  - **Predecessors:** 1.4.2
+  - **Effort Estimate:** Medium
+  - **Action:** Build `/api/v1/scenes` linked to specific projects.
+
+### 1.5 Summary Task: AI Orchestration & External Integrations
 **Prerequisite Reading:** `docs/blueprint/9_AI_Components.txt`
 
-- **Step 5.1:** Create `backend/services/llm_service.py`. Implement the `AgentOrchestrator` class to interface with the Gemini 1.5 Pro API.
-- **Step 5.2:** Implement the prompt template logic: injecting the user's `concept` and returning strict JSON for scene breakdowns.
-- **Step 5.3:** Create a Celery worker in `backend/worker/tasks.py`.
-- **Step 5.4:** Implement the Replit Sandbox execution task. It should take Python code (generated by Gemini), send it to the Replit API, and poll for the execution `logs` and `exit_code`.
-- **Step 5.5:** Build the POST `/api/v1/scenes/{id}/render` endpoint that triggers this Celery background task and returns a `202 Accepted`.
+- **1.5.1 Leaf Node: Gemini Service Orchestrator**
+  - **Predecessors:** 1.4.3
+  - **Effort Estimate:** High
+  - **Action:** Implement `AgentOrchestrator` to interface with Gemini 1.5 Pro. Handle strict JSON prompt injection for scene breakdowns.
+  
+- **1.5.2 Leaf Node: Background Worker (Celery)**
+  - **Predecessors:** 1.1.1
+  - **Effort Estimate:** Medium
+  - **Action:** Implement Celery worker for long-running tasks.
 
-## Phase 6: Frontend Foundation & UI System
+- **1.5.3 Leaf Node: Replit Sandbox Execution Task**
+  - **Predecessors:** 1.5.2
+  - **Effort Estimate:** High
+  - **Action:** Build Celery task that takes Python code, sends it to Replit API, and polls for execution logs. Link to `/api/v1/scenes/{id}/render`.
+
+### 1.6 Summary Task: Frontend Foundation & UI System
 **Prerequisite Reading:** `docs/blueprint/11_Frontend_Architecture_(Nextjs_14_App_Router).txt`, `docs/blueprint/4_UI_UX_Specification.txt`
 
-- **Step 6.1:** Open `frontend/tailwind.config.ts`. Extend the theme with exact colors: Background `#0A0A0A`, Surface `#1A1A1A`, Primary `#E50914`.
-- **Step 6.2:** Install required frontend packages: `zustand` (state), `@tanstack/react-query` (data fetching), `axios`, `lucide-react` (icons).
-- **Step 6.3:** Build the `PrimaryButton` component with the specified hover state (`#B80710`, 200ms ease-in-out transition).
-- **Step 6.4:** Build the `SkeletonLoader` component (shimmering `#2A2A2A` to `#3A3A3A`).
-- **Step 6.5:** Build the `ExecutionLogViewer` component (Black background, monospace `#00FF00` text, auto-scroll).
+- **1.6.1 Leaf Node: Theme & Styling Setup**
+  - **Predecessors:** 1.1.2
+  - **Effort Estimate:** Low
+  - **Action:** Configure Tailwind colors (`#0A0A0A`, `#1A1A1A`, `#E50914`). Install UI libraries (`lucide-react`).
 
-## Phase 7: Frontend Pages & State Management
+- **1.6.2 Leaf Node: Reusable UI Components**
+  - **Predecessors:** 1.6.1
+  - **Effort Estimate:** Medium
+  - **Action:** Build `PrimaryButton`, `SkeletonLoader`, and `ExecutionLogViewer`.
+
+### 1.7 Summary Task: Frontend Pages & State Management
 **Prerequisite Reading:** `docs/blueprint/5_Navigation.txt`, `docs/blueprint/3_Complete_User_Journey.txt`
 
-- **Step 7.1:** Create `frontend/lib/api.ts` configuring Axios to automatically send credentials (cookies) with every request.
-- **Step 7.2:** Build the `/login` and `/register` pages with form validation. On success, redirect to `/dashboard`.
-- **Step 7.3:** Build the `/dashboard` page. Use React Query to fetch the user's projects. Implement empty states ("Your studio is empty").
-- **Step 7.4:** Build the `/projects/[id]` workspace page. It should have a split pane: Left for the Script/Scenes, Right for the ExecutionLogViewer.
-- **Step 7.5:** Wire the "Generate Script" button to call the LLM backend endpoint and populate the UI with the resulting scenes.
+- **1.7.1 Leaf Node: Auth Pages & Global State**
+  - **Predecessors:** 1.6.2, 1.3.2
+  - **Effort Estimate:** Medium
+  - **Action:** Build `/login` and `/register`. Implement Axios interceptors and Zustand state.
 
-## Phase 8: Polish, Error Handling & Validation
-**Prerequisite Reading:** `docs/blueprint/16_Error_Handling.txt`, `docs/blueprint/13_Performance.txt`, `docs/blueprint/19_Acceptance_Criteria.txt`
+- **1.7.2 Leaf Node: Dashboard Page**
+  - **Predecessors:** 1.7.1, 1.4.2
+  - **Effort Estimate:** Medium
+  - **Action:** Build `/dashboard`. Fetch user projects with React Query. Implement empty states.
 
-- **Step 8.1:** Implement a global Axios interceptor. If an API returns `401`, automatically redirect the user to `/login`.
-- **Step 8.2:** Add toast notifications (e.g., using `react-hot-toast`) for all API success and error states.
-- **Step 8.3:** Implement a polling hook (`useInterval` or React Query `refetchInterval`) to query the backend for Replit Sandbox job status every 3 seconds while a render is pending.
-- **Step 8.4:** Verify all acceptance criteria from the blueprint are met. The application must run flawlessly end-to-end.
+- **1.7.3 Leaf Node: Project Workspace Page**
+  - **Predecessors:** 1.7.2, 1.4.3, 1.5.3
+  - **Effort Estimate:** High
+  - **Action:** Build `/projects/[id]`. Split pane UI for Script/Scenes and ExecutionLogViewer. Wire up the "Generate Script" and "Render" buttons to the AI backend.
+
+### 1.8 Summary Task: Polish, Error Handling & Validation
+**Prerequisite Reading:** `docs/blueprint/16_Error_Handling.txt`, `docs/blueprint/19_Acceptance_Criteria.txt`
+
+- **1.8.1 Leaf Node: Global Error Boundaries**
+  - **Predecessors:** 1.7.3
+  - **Effort Estimate:** Low
+  - **Action:** Implement error toasts (`react-hot-toast`) and Next.js `error.tsx` boundaries.
+
+- **1.8.2 Leaf Node: E2E Acceptance Verification**
+  - **Predecessors:** All previous leaf nodes.
+  - **Effort Estimate:** High
+  - **Action:** Perform end-to-end testing against the Acceptance Criteria. Ensure Replit Sandbox executes successfully and returns video URLs.
+  - **DoD:** 100% Earned Value across the entire WBS.
