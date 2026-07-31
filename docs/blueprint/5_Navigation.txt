@@ -1,0 +1,11 @@
+## 5. Navigation
+- `/` - Public landing page.
+- `/login` & `/register` - Authentication routes.
+- `/dashboard` - Protected. Grid of user's projects.
+- `/projects/[id]` - Protected. The main workspace for a specific movie.
+- `/projects/[id]/script` - Protected. Screenplay editor view.
+- `/projects/[id]/render` - Protected. Pipeline execution and Replit logs view.
+- `/settings` - Protected. API Key management.
+- **Redirects:** Unauthenticated users accessing `/dashboard` are strictly 302 redirected to `/login?next=/dashboard`.
+
+---

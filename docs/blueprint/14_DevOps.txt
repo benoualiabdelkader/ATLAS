@@ -1,0 +1,9 @@
+## 14. DevOps
+- **Deployment:** 
+  - Frontend: Vercel or Google Cloud Run via Docker.
+  - Backend: Google Cloud Run.
+  - Database: Google Cloud SQL (PostgreSQL).
+- **CI/CD:** GitHub Actions. On `push` to `main`: run lint, run pytest, build Docker images, deploy to Google Cloud Run.
+- **Logging:** Python `logging` module configured to output JSON logs. Ingested by Google Cloud Logging.
+
+---

@@ -1,0 +1,6 @@
+## 16. Error Handling
+- **User-Facing:** "Something went wrong, but our team is on it." Toast notifications for transient errors.
+- **Internal:** All exceptions caught in FastAPI global exception handler, logged with stack traces, and mapped to standard HTTP status codes.
+- **Fallback:** If Gemini 1.5 Pro is down, fallback to `gemini-1.5-flash`.
+
+---

@@ -1,0 +1,4 @@
+## 20. Developer Notes
+- **Important Assumptions:** We assume the Replit API allows arbitrary python script execution via their deployments/sandbox API.
+- **Technical Debt:** For the MVP, we are using long-polling on the frontend to check Replit job status. Post-hackathon, this must be refactored to WebSockets for true real-time performance.
+- **Extension Points:** The `AgentOrchestrator` service is designed via an interface so we can easily swap out Gemini for another LLM if required in the future.

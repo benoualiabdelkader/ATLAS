@@ -1,0 +1,11 @@
+## 11. Frontend Architecture (Next.js 14 App Router)
+- **Folder Structure:**
+  - `/app`: Page routes and layouts.
+  - `/components/ui`: Reusable dumb components (buttons, inputs) using shadcn/ui.
+  - `/components/features`: Complex components tied to business logic (e.g., `SceneEditor.tsx`).
+  - `/lib`: Utility functions, API clients (Axios/fetch wrappers).
+  - `/store`: Zustand state management for UI state (sidebar toggles, active project).
+- **State Management:** React Query for server state (caching API responses, invalidating on mutations). Zustand for local client state.
+- **Routing:** App router with `loading.tsx` and `error.tsx` boundaries for every nested route.
+
+---

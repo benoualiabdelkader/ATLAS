@@ -1,0 +1,7 @@
+## 13. Performance
+- **API Optimization:** Pagination applied to `GET /api/projects` (limit 20 per page).
+- **Frontend Optimization:** Next.js Image component used for all assets. Code splitting via App Router. 
+- **Database Optimization:** Foreign keys indexed.
+- **UX Performance:** Optimistic UI updates. When a user changes a scene's text, update UI instantly, save to backend in background.
+
+---

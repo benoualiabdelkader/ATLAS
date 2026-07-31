@@ -1,0 +1,11 @@
+## 10. Backend Architecture (FastAPI)
+- **Folder Structure:**
+  - `/api/routes`: Endpoints grouped by resource (`projects.py`, `scenes.py`).
+  - `/core`: `config.py`, `security.py`.
+  - `/db`: `models.py`, `session.py`.
+  - `/services`: Business logic (`llm_service.py`, `replit_service.py`).
+  - `/worker`: Celery tasks (`tasks.py`).
+- **Dependency Injection:** Database sessions and external API clients are injected into routes using FastAPI's `Depends()`.
+- **Background Jobs:** Celery + Redis broker. Used strictly for polling Replit sandbox status and executing long LLM chains to prevent blocking HTTP workers.
+
+---

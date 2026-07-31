@@ -1,0 +1,34 @@
+## 6. Database Design (PostgreSQL)
+
+**ER Diagram (Text):**
+`User (1) --- (N) Project (1) --- (N) Scene (1) --- (N) ReplitJob`
+
+**Tables & Fields:**
+- **Table: `users`**
+  - `id` (UUID, PK)
+  - `email` (VARCHAR 255, Unique, Not Null)
+  - `password_hash` (VARCHAR 255, Not Null)
+  - `created_at` (TIMESTAMP, Default NOW())
+- **Table: `projects`**
+  - `id` (UUID, PK)
+  - `user_id` (UUID, FK -> `users.id`, ON DELETE CASCADE)
+  - `title` (VARCHAR 100, Not Null)
+  - `concept` (TEXT, Not Null)
+  - `status` (VARCHAR 20, Default 'DRAFT')
+- **Table: `scenes`**
+  - `id` (UUID, PK)
+  - `project_id` (UUID, FK -> `projects.id`, ON DELETE CASCADE)
+  - `scene_number` (INT, Not Null)
+  - `content` (TEXT, Not Null)
+  - `render_status` (VARCHAR 20, Default 'PENDING')
+- **Table: `replit_jobs`**
+  - `id` (UUID, PK)
+  - `scene_id` (UUID, FK -> `scenes.id`, ON DELETE CASCADE)
+  - `repl_id` (VARCHAR 255, Not Null)
+  - `code_payload` (TEXT, Not Null)
+  - `logs` (TEXT)
+  - `asset_url` (VARCHAR 500)
+  - `status` (VARCHAR 20, Default 'QUEUED')
+- **Indexes:** Index on `projects.user_id`, `scenes.project_id`.
+
+---

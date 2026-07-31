@@ -1,0 +1,23 @@
+## 17. File Structure (Root Repository)
+```
+/
+├── .github/workflows/   # CI/CD pipelines
+├── backend/             # FastAPI application
+│   ├── app/             # Application source code
+│   ├── tests/           # Pytest suite
+│   ├── Dockerfile       # Backend container definition
+│   └── requirements.txt # Python dependencies
+├── frontend/            # Next.js application
+│   ├── app/             # App router pages
+│   ├── components/      # React components
+│   ├── Dockerfile       # Frontend container definition
+│   └── package.json     # Node dependencies
+├── docs/                # Project documentation
+│   └── SOFTWARE_BLUEPRINT.md # THIS FILE
+├── .env.example         # Template for environment variables
+├── .gitignore
+├── docker-compose.yml   # Local development orchestration
+└── README.md            # Hackathon summary
+```
+
+---

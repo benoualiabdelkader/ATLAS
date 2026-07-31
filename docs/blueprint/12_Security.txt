@@ -1,0 +1,8 @@
+## 12. Security
+- **Secrets Management:** Environment variables strictly. Replit tokens and Google Cloud credentials NEVER exposed to the frontend.
+- **CORS:** Backend configured to accept requests ONLY from the frontend origin.
+- **CSRF:** Avoided by using SameSite=Strict HTTP-only cookies for auth.
+- **SQL Injection:** Prevented by using SQLAlchemy ORM; no raw SQL queries allowed.
+- **Input Validation:** All incoming API payloads validated strictly using Pydantic schemas.
+
+---

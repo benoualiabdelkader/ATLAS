@@ -1,0 +1,7 @@
+## 8. Authentication
+- **Mechanism:** JWT (JSON Web Tokens) stored in HTTP-only, secure cookies to prevent XSS.
+- **Lifecycle:** Access token expires in 15 minutes. Refresh token expires in 7 days.
+- **Password Reset:** Standard email flow with expiring magic link (JWT with 1-hour expiration).
+- **Permissions:** A user can only read/write `Projects` and `Scenes` where `project.user_id == jwt.user_id`. Verified via middleware on every request.
+
+---

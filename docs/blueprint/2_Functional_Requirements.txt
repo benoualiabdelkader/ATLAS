@@ -1,0 +1,33 @@
+## 2. Functional Requirements
+
+### Feature 1: Project & Concept Ingestion
+- **Purpose:** Allow users to create a new movie project by providing a raw text concept.
+- **Trigger:** User clicks "New Project" and submits a form.
+- **Inputs:** `title` (string, max 100 chars), `concept` (text, min 50 chars, max 2000 chars), `genre` (enum).
+- **Outputs:** Creates a `Project` database record. Transitions UI to the "Script Generation" dashboard.
+- **Validation:** `concept` must pass basic content safety filters (no highly illegal content).
+- **Edge Cases:** Network failure during submission -> save draft locally in `localStorage`.
+- **Error Handling:** If database insert fails, return 500 with "Unable to initialize project. Please try again."
+- **Dependencies:** PostgreSQL database.
+- **User Permissions:** Authenticated users only.
+- **Expected Behavior:** Returns `projectId` and redirects to `/projects/{projectId}`.
+
+### Feature 2: Autonomous Script Generation
+- **Purpose:** Gemini Agent acts as a screenwriter to expand the concept into a scene-by-scene script.
+- **Trigger:** Automatic upon project creation, or manual trigger "Generate Script".
+- **Inputs:** `projectId`, `concept`.
+- **Outputs:** A structured JSON object containing an array of `Scene` objects (scene number, location, action, dialogue).
+- **Validation:** JSON schema validation of the LLM output. Must contain at least 1 scene.
+- **Error Handling:** If Gemini returns malformed JSON, retry up to 3 times with a strict JSON format prompt.
+- **Dependencies:** Google Cloud Vertex AI (Gemini 1.5 Pro).
+
+### Feature 3: Replit Sandbox Execution (The Editor Agent)
+- **Purpose:** Execute python scripts (e.g., calling FFmpeg, video generation APIs) to render a specific scene.
+- **Trigger:** User clicks "Render Scene" or auto-triggered by pipeline.
+- **Inputs:** `sceneId`, `generated_python_code` (from Gemini).
+- **Outputs:** A URL to the rendered `.mp4` asset.
+- **Business Rules:** Code MUST execute in an isolated Replit Sandbox. Execution timeout is exactly 300 seconds.
+- **Error Handling:** If Sandbox crashes, capture `stderr` logs, feed them back to Gemini to "fix the code", and retry once.
+- **Dependencies:** Replit API.
+
+---

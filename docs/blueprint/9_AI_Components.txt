@@ -1,0 +1,8 @@
+## 9. AI Components
+- **Model:** Google `gemini-1.5-pro` via Vertex AI.
+- **Prompt Template (Screenwriter):**
+  `"You are an expert Hollywood screenwriter. Given the concept: {concept}, break it down into exactly {num_scenes} scenes. Return strictly valid JSON matching this schema: {schema}."`
+- **Context Injection:** When generating python rendering code, the prompt is injected with the Replit environment constraints (e.g., "Assume FFmpeg is installed. Write the output to output.mp4").
+- **Safety Mechanisms:** Strict JSON parsing with Pydantic. If parsing fails, trigger auto-correction prompt loop up to 3 times.
+
+---

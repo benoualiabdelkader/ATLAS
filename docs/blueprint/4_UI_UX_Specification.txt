@@ -1,0 +1,19 @@
+## 4. UI/UX Specification
+- **Theme:** Dark mode only. Represents a premium cinematic editing software (like DaVinci Resolve or Premiere Pro).
+- **Colors:**
+  - Background: `#0A0A0A` (Deep Black)
+  - Surface: `#1A1A1A` (Dark Gray)
+  - Primary Accent: `#E50914` (Cinematic Red)
+  - Text Primary: `#FFFFFF`
+  - Text Secondary: `#A3A3A3`
+- **Typography:** 'Inter' for UI elements, 'Courier Prime' for script/screenplay displays.
+- **Layout (Dashboard):** 
+  - Left Sidebar (Fixed, 250px): Navigation links (Projects, Agents, Settings), User Profile at bottom.
+  - Topbar (Height 60px): Breadcrumbs, Global Search, Notification Bell.
+  - Main Content Area: Responsive grid.
+- **Components:**
+  - **Primary Button:** Background `#E50914`, Text `#FFF`, Border Radius `4px`, padding `10px 24px`. Hover state: `#B80710` with a 200ms ease-in-out transition.
+  - **Execution Log Viewer:** A terminal-like window. Background `#000`, Text `#00FF00` (Monospace). Auto-scrolls to bottom on new log line.
+- **Skeleton Loaders:** Shimmering gray (`#2A2A2A` to `#3A3A3A`) placeholders matching the exact dimensions of the content they replace.
+
+---

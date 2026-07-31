@@ -1,0 +1,8 @@
+## 3. Complete User Journey
+- **First-Time Experience:** User lands on `/`. Sees landing page. Clicks "Start Creating". Redirected to `/login`. Completes registration. Redirected to onboarding: a 3-step wizard to input their Replit API token and Google Cloud Project ID.
+- **Happy Path:** User navigates to `/dashboard`. Clicks "Create Movie". Enters "A cyberpunk detective solves a crime". System generates script (loads for 5-10s with skeleton loaders). User approves script. System begins rendering scenes sequentially. User watches real-time execution logs from Replit. Final video appears.
+- **Error Path (API Limit Reached):** During rendering, Replit API returns 429 Too Many Requests. System halts pipeline, updates UI to "Rate Limited", displays countdown timer for retry, and sends an in-app notification.
+- **Recovery Path:** Once timer expires, system automatically resumes rendering from the exact failed `sceneId`.
+- **Empty States:** On `/dashboard`, if 0 projects, display a stylized clapperboard icon with text "Your studio is empty. Create your first cinematic masterpiece." and a primary CTA button.
+
+---

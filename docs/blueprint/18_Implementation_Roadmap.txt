@@ -1,0 +1,14 @@
+## 18. Implementation Roadmap
+- **Phase 1: Foundation (Days 1-2)**
+  - Setup repo, Docker compose, database schemas, and FastAPI/Next.js scaffolding.
+  - Implement Auth.
+- **Phase 2: Core Orchestration (Days 3-5)**
+  - Integrate Gemini API. Implement script generation workflow.
+  - Build UI for viewing and editing the script.
+- **Phase 3: Partner Integration (Days 6-8)**
+  - Integrate Replit API. Create the background worker system to dispatch and monitor sandbox code execution.
+  - Build real-time log viewer in frontend.
+- **Phase 4: Polish & Hackathon Delivery (Days 9-10)**
+  - Record 3-minute trailer. Finalize README. Fix edge case bugs.
+
+---

@@ -1,0 +1,12 @@
+## 1. Product Vision
+- **Complete Purpose:** ATLAS is an autonomous AI agent orchestration platform that automates the cinematic production lifecycle. It translates rough concepts into structured screenplays, breaks them down into scenes, writes rendering/generation code for those scenes, and securely executes that code via Replit sandboxes to generate final video assets.
+- **Target Users:** Independent filmmakers, enterprise media studio executives, content creators, and AI researchers.
+- **User Personas:**
+  - *The Studio Executive:* Wants a high-level overview of project status, costs, and final asset review.
+  - *The Director:* Inputs creative vision, reviews script drafts, and approves storyboard generations.
+  - *The Technical Producer:* Manages API keys, monitors Replit sandbox execution logs, and handles integrations.
+- **Main Problems Solved:** The fragmentation of generative AI tools. Currently, creators manually move text from LLMs to image generators to video generators. ATLAS automates the entire pipeline through multi-agent orchestration.
+- **Success Metrics:** Time from prompt to final render (target < 15 mins for a 3-min trailer), 99.9% sandbox execution success rate, zero leaked API credentials.
+- **Long-term Vision:** Become the industry standard "Autonomous Studio" operating system, replacing manual post-production pipelines.
+
+---

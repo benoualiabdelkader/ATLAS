@@ -1,0 +1,19 @@
+## 7. API Specification
+
+**Endpoint: Create Project**
+- **URL:** `/api/v1/projects`
+- **Method:** `POST`
+- **Headers:** `Authorization: Bearer <JWT>`
+- **Request Schema:** `{"title": "string", "concept": "string"}`
+- **Response Schema (201):** `{"id": "uuid", "title": "string", "status": "DRAFT"}`
+- **Error Responses:** 400 Bad Request if fields missing. 401 Unauthorized if JWT invalid.
+
+**Endpoint: Trigger Replit Render**
+- **URL:** `/api/v1/scenes/{scene_id}/render`
+- **Method:** `POST`
+- **Headers:** `Authorization: Bearer <JWT>`
+- **Request Schema:** `{}`
+- **Response Schema (202):** `{"job_id": "uuid", "status": "QUEUED"}`
+- **Expected Behavior:** Enqueues a Celery background task to interact with Replit. Returns 202 Accepted immediately.
+
+---

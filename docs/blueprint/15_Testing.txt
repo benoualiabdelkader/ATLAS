@@ -1,0 +1,6 @@
+## 15. Testing
+- **Unit Tests:** `pytest` for backend. Test all services independently (mocking Gemini and Replit APIs). Minimum 80% coverage.
+- **Integration Tests:** Test the database repository layer with a test Postgres container.
+- **E2E Tests:** Cypress or Playwright to test the happy path user journey (Login -> Create Project -> View Script).
+
+---
