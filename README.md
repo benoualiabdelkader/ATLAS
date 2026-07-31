@@ -5,10 +5,14 @@
 > 
 > Your objective is to generate the entire application (frontend, backend, database, and integrations) with zero assumptions.
 
-## 🧭 HOW TO START (CRITICAL INSTRUCTION)
-**DO NOT** try to build everything at once. 
-You **MUST** open and read the **[`plan.md`](plan.md)** file in the root of this repository. 
-The `plan.md` file will guide you step-by-step on exactly which blueprint files to read and which components to build at each phase.
+## 🧭 THE BATCH EXECUTION SYSTEM (CRITICAL)
+**DO NOT** try to build everything at once. LLMs suffer from context degradation when generating too much code in a single continuous session. 
+
+To maintain peak concentration and zero hallucination, you must operate in **Strict Batches (Sprints)**.
+- You will only execute **ONE PHASE** at a time from the `plan.md`.
+- When you finish a Phase, you **MUST STOP**. 
+- You will output exactly this: `[PHASE X COMPLETE. I AM CLEARING MY CONTEXT. WAITING FOR USER AUTHORIZATION TO BEGIN PHASE Y.]`
+- Do not write any code for the next phase until the user explicitly types: "Begin Phase Y".
 
 ## 📂 Blueprint Structure Reference
 For your reference, the complete engineering specification has been split into 20 precise `.txt` files located in `docs/blueprint/`:
