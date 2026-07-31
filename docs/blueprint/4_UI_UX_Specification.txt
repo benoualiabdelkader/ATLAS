@@ -1,19 +1,90 @@
 ## 4. UI/UX Specification
-- **Theme:** Dark mode only. Represents a premium cinematic editing software (like DaVinci Resolve or Premiere Pro).
-- **Colors:**
-  - Background: `#0A0A0A` (Deep Black)
-  - Surface: `#1A1A1A` (Dark Gray)
-  - Primary Accent: `#E50914` (Cinematic Red)
-  - Text Primary: `#FFFFFF`
-  - Text Secondary: `#A3A3A3`
-- **Typography:** 'Inter' for UI elements, 'Courier Prime' for script/screenplay displays.
-- **Layout (Dashboard):** 
-  - Left Sidebar (Fixed, 250px): Navigation links (Projects, Agents, Settings), User Profile at bottom.
-  - Topbar (Height 60px): Breadcrumbs, Global Search, Notification Bell.
-  - Main Content Area: Responsive grid.
-- **Components:**
-  - **Primary Button:** Background `#E50914`, Text `#FFF`, Border Radius `4px`, padding `10px 24px`. Hover state: `#B80710` with a 200ms ease-in-out transition.
-  - **Execution Log Viewer:** A terminal-like window. Background `#000`, Text `#00FF00` (Monospace). Auto-scrolls to bottom on new log line.
-- **Skeleton Loaders:** Shimmering gray (`#2A2A2A` to `#3A3A3A`) placeholders matching the exact dimensions of the content they replace.
 
----
+### 4.1 Design System & Theme Tokens
+- **Theme:** Strict Dark Mode. Emulates professional cinematic grading software (e.g., DaVinci Resolve, Nuke).
+- **Color Palette (Hex Codes):**
+  - `bg-base`: `#0A0A0A` (Deepest Black - Used for the main application background).
+  - `bg-surface`: `#141414` (Dark Gray - Used for cards, sidebars, and modals).
+  - `bg-surface-hover`: `#1F1F1F` (Lighter Gray - Used when hovering over interactive surface elements).
+  - `primary-accent`: `#E50914` (Cinematic Red - Used for primary calls to action, active states, and critical highlights).
+  - `primary-hover`: `#B80710` (Darker Red - Used for hover states on primary buttons).
+  - `text-primary`: `#F5F5F5` (Off-White - Used for headings and primary paragraph text).
+  - `text-secondary`: `#A3A3A3` (Medium Gray - Used for metadata, placeholders, and inactive states).
+  - `border-subtle`: `#262626` (Used for all dividers and subtle component borders).
+  - `status-success`: `#10B981` (Emerald Green - Used for completed sandbox executions).
+  - `status-error`: `#EF4444` (Red - Used for failed executions or API errors).
+  - `status-warning`: `#F59E0B` (Amber - Used for rate-limits or warnings).
+  - `terminal-bg`: `#000000` (Pure Black - Used strictly for the Execution Log Viewer).
+  - `terminal-text`: `#00FF00` (Neon Green - Used strictly for monospace log output).
+
+### 4.2 Typography System
+- **Font Families:**
+  - `font-sans`: 'Inter', sans-serif (Used for all UI elements, buttons, navigation).
+  - `font-mono`: 'Courier Prime', monospace (Used for Screenplay text and Execution Logs).
+- **Font Weights:** Regular (400), Medium (500), SemiBold (600), Bold (700).
+- **Scale:**
+  - `text-xs`: 12px / 16px line-height.
+  - `text-sm`: 14px / 20px line-height.
+  - `text-base`: 16px / 24px line-height.
+  - `text-lg`: 18px / 28px line-height.
+  - `text-xl`: 20px / 28px line-height (Card Titles).
+  - `text-2xl`: 24px / 32px line-height (Page Headers).
+
+### 4.3 Component Library Details
+
+#### 4.3.1 Primary Button (`<PrimaryButton>`)
+- **Default State:** Background `primary-accent` (`#E50914`), Text `text-primary` (`#F5F5F5`), Font Weight 600 (SemiBold), Padding `12px 24px`, Border Radius `6px`, no border.
+- **Hover State:** Background shifts to `primary-hover` (`#B80710`). Transition: `all 200ms ease-in-out`. Cursor becomes `pointer`.
+- **Active/Click State:** Scale transforms to `0.95` (shrinks slightly) for 100ms to give physical feedback.
+- **Disabled State:** Background `#333333`, Text `#666666`, cursor `not-allowed`, hover effects disabled.
+- **Loading State:** Replaces text with a 16x16px spinning SVG loader (color `#F5F5F5`). Button becomes non-clickable.
+
+#### 4.3.2 Secondary Button (`<SecondaryButton>`)
+- **Default State:** Background `transparent`, Border `1px solid border-subtle` (`#262626`), Text `text-primary`. Padding `12px 24px`, Border Radius `6px`.
+- **Hover State:** Background shifts to `bg-surface-hover` (`#1F1F1F`). Border color shifts to `text-secondary` (`#A3A3A3`).
+- **Active/Click State:** Scale transforms to `0.95`.
+
+#### 4.3.3 Input Fields (`<TextInput>`)
+- **Default State:** Background `bg-base` (`#0A0A0A`), Border `1px solid border-subtle` (`#262626`), Text `text-primary`, Border Radius `4px`, Padding `12px 16px`. Placeholder text uses `text-secondary`.
+- **Focus State:** Border shifts to `primary-accent` (`#E50914`), Box-shadow adds `0 0 0 2px rgba(229, 9, 20, 0.2)`. Transition `border 150ms ease`.
+- **Error State:** Border shifts to `status-error` (`#EF4444`). An error message appears 4px below the input in `text-xs` `status-error`.
+
+#### 4.3.4 Execution Log Viewer (`<LogViewer>`)
+- **Container:** Background `terminal-bg` (`#000000`), Border `1px solid border-subtle`, Border Radius `8px`, Padding `16px`, Overflow-Y `auto`.
+- **Text:** Font `font-mono`, Color `terminal-text` (`#00FF00`), Size `text-sm`.
+- **Behavior:** On new log entry, component MUST automatically scroll smoothly to the bottom. If the user scrolls up manually, auto-scroll is paused until they scroll back to the bottom.
+- **Skeleton State:** If logs are fetching, display 3 pulsing rectangular blocks (Heights: 20px, 40px, 20px) with color `#111111` to `#222222`.
+
+### 4.4 Global Layout & Navigation Behaviors
+
+#### 4.4.1 Left Sidebar (`<Sidebar>`)
+- **Dimensions:** Width strictly `260px`, Height `100vh`, Position `fixed` to the left.
+- **Styling:** Background `bg-surface` (`#141414`), Border-right `1px solid border-subtle`.
+- **Navigation Links:**
+  - Default: Padding `10px 16px`, Text `text-secondary`, Icon `text-secondary` (size 20px), Border Radius `6px`.
+  - Hover: Background `bg-base`, Text `text-primary`, Icon `text-primary`.
+  - Active (Current Route): Background `rgba(229, 9, 20, 0.1)`, Text `primary-accent`, Icon `primary-accent`, Font Weight 600.
+
+#### 4.4.2 Topbar (`<Topbar>`)
+- **Dimensions:** Height strictly `64px`, Width `calc(100% - 260px)`, Position `fixed` top, offset by sidebar width.
+- **Styling:** Background `bg-base` (`#0A0A0A`) with `backdrop-filter: blur(8px)` and 80% opacity, Border-bottom `1px solid border-subtle`. Z-index `40`.
+
+### 4.5 Interaction Flows & "What Happens When Clicked"
+
+#### 4.5.1 "Create New Project" Flow
+1. **Click "New Project" Button:** A modal overlay appears. Overlay background is `rgba(0,0,0,0.8)` with `backdrop-blur-sm`. Modal animates in (Translate Y from 20px to 0px, Opacity 0 to 1 over 200ms).
+2. **Inside Modal:** User types Title and Concept.
+3. **Click "Generate Script" (Submit):** Button enters Loading State (spinner). API call is dispatched.
+4. **On Success:** Modal animates out (Opacity 1 to 0). Router pushes to `/projects/[new-id]`. A toast notification slides in from top-right: "Project created successfully" (Green check icon).
+5. **On Error:** Button exits Loading State. Error text appears below the concept input.
+
+#### 4.5.2 "Render Scene" Flow (Inside Project Workspace)
+1. **Click "Render Sandbox" Button (on a Scene card):** 
+2. **Immediate Feedback:** The button changes to "Initializing Sandbox..." (Loading state). The `<LogViewer>` component mounts in the right pane.
+3. **During Execution:** Every 3 seconds, a new log line appears in the `<LogViewer>`. The component smoothly auto-scrolls down.
+4. **On Completion:** The button changes to a `<SecondaryButton>` saying "Download Asset". A success toast appears: "Scene 1 rendered successfully". The LogViewer adds a final line `[PROCESS TERMINATED SUCCESSFULLY]` in white text.
+
+### 4.6 Transitions & Micro-Animations
+- **Page Routing:** Wrap Next.js pages in a CSS transition container. Fade in new pages (`opacity: 0` to `opacity: 1`, duration `300ms ease-out`).
+- **Modals:** Slide up and fade in (`transform: translateY(10px) opacity: 0` -> `translateY(0) opacity: 1`, duration `200ms cubic-bezier(0.16, 1, 0.3, 1)`).
+- **Toasts:** Slide in from the right edge (`transform: translateX(100%)` -> `translateX(0)`, duration `300ms bouncy`). Disappear automatically after 4000ms.
