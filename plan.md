@@ -1,56 +1,81 @@
-# Replit AI Execution Plan (Step-by-Step Orchestration)
+# Replit AI Execution Plan (Micro-Step Orchestration)
 
-> **INSTRUCTIONS FOR REPLIT AI:**
-> Do NOT attempt to build the entire project at once. Building everything in one shot will lead to context loss and errors. 
-> Follow this plan **step-by-step**. Before starting a phase, read the specifically referenced `.txt` blueprint files for that phase located in the `docs/blueprint/` directory.
-> Only move to the next phase after completing and verifying the current one perfectly.
+> **CRITICAL INSTRUCTIONS FOR REPLIT AI:**
+> You are building a complex, enterprise-grade application. **DO NOT** attempt to write the entire codebase at once. 
+> You must execute this plan **strictly sequentially**. Do not move to a Step or Phase until the previous one is 100% complete, functional, and error-free.
+> Before writing code for any Phase, you MUST read the referenced `.txt` files in `docs/blueprint/` into your context.
 
 ---
 
 ## Phase 1: Project Initialization & Infrastructure
-- **Files to Read:** 
-  - `docs/blueprint/17_File_Structure_(Root_Repository).txt`
-  - `docs/blueprint/14_DevOps.txt`
-- **Action:** Create the foundational folder structure for `/backend` and `/frontend`. Set up `package.json`, `requirements.txt`, `.env` loaders, and basic container configurations.
+**Prerequisite Reading:** `docs/blueprint/17_File_Structure_(Root_Repository).txt`, `docs/blueprint/14_DevOps.txt`
 
-## Phase 2: Database & Models
-- **Files to Read:** 
-  - `docs/blueprint/6_Database_Design_(PostgreSQL).txt`
-- **Action:** Inside the backend, set up your ORM (e.g., SQLAlchemy/Prisma). Define the `users`, `projects`, `scenes`, and `replit_jobs` tables with exact relationships, constraints, and UUID primary keys.
+- **Step 1.1:** Create the base root folders: `/backend` and `/frontend`.
+- **Step 1.2:** Navigate to `/frontend` and initialize a Next.js 14 App Router project with TypeScript and Tailwind CSS. Remove default boilerplate.
+- **Step 1.3:** Navigate to `/backend` and initialize a Python environment. Create a `requirements.txt` containing `fastapi`, `uvicorn`, `sqlalchemy`, `psycopg2-binary`, `pydantic`, `python-jose`, `passlib`, `celery`, and `redis`.
+- **Step 1.4:** Create `backend/main.py` with a basic FastAPI "Hello World" to verify routing.
+- **Step 1.5:** Configure `docker-compose.yml` (if specified) or set up the `.env` file based on `.env.example`.
 
-## Phase 3: Backend Core & Authentication
-- **Files to Read:** 
-  - `docs/blueprint/10_Backend_Architecture_(FastAPI).txt`
-  - `docs/blueprint/8_Authentication.txt`
-  - `docs/blueprint/12_Security.txt`
-- **Action:** Build the FastAPI core, JWT HTTP-only cookie middleware, password hashing, and user registration/login endpoints. Ensure CORS and security headers are configured.
+## Phase 2: Database Architecture & Models
+**Prerequisite Reading:** `docs/blueprint/6_Database_Design_(PostgreSQL).txt`
 
-## Phase 4: Backend Business Logic & API
-- **Files to Read:** 
-  - `docs/blueprint/7_API_Specification.txt`
-  - `docs/blueprint/2_Functional_Requirements.txt`
-- **Action:** Implement the endpoints for CRUD operations on Projects and Scenes. Do not integrate the AI generation logic yet; focus strictly on data persistence and REST API contracts.
+- **Step 2.1:** Create `backend/db/session.py` to establish the SQLAlchemy engine and session local using `DATABASE_URL`.
+- **Step 2.2:** Create `backend/db/models.py`.
+- **Step 2.3:** Define the `User` model (id: UUID, email, password_hash, created_at).
+- **Step 2.4:** Define the `Project` model (id, user_id, title, concept, status) with a foreign key to `User`.
+- **Step 2.5:** Define the `Scene` model (id, project_id, scene_number, content, render_status) with a foreign key to `Project`.
+- **Step 2.6:** Define the `ReplitJob` model (id, scene_id, repl_id, code_payload, logs, status).
+- **Step 2.7:** Ensure `ON DELETE CASCADE` is properly configured for all relationships.
 
-## Phase 5: AI Orchestration & Integrations
-- **Files to Read:** 
-  - `docs/blueprint/9_AI_Components.txt`
-- **Action:** Implement the `AgentOrchestrator` service that calls the Google Gemini API (using the exact prompts specified). Implement the Celery/background worker logic that handles spawning dynamic sandboxes via the Replit API.
+## Phase 3: Security & Authentication (Backend)
+**Prerequisite Reading:** `docs/blueprint/8_Authentication.txt`, `docs/blueprint/12_Security.txt`
+
+- **Step 3.1:** Create `backend/core/security.py`. Implement password hashing using `passlib` (bcrypt).
+- **Step 3.2:** Implement JWT creation functions (access token: 15 mins, refresh token: 7 days).
+- **Step 3.3:** Create Pydantic schemas in `backend/schemas/user.py` for Login and Registration payloads.
+- **Step 3.4:** Build `/api/v1/auth/register` endpoint to create a new user.
+- **Step 3.5:** Build `/api/v1/auth/login` endpoint. It MUST set the JWT inside a secure, `HttpOnly` cookie.
+
+## Phase 4: Core Business API
+**Prerequisite Reading:** `docs/blueprint/7_API_Specification.txt`, `docs/blueprint/2_Functional_Requirements.txt`
+
+- **Step 4.1:** Create `backend/api/deps.py` to write a dependency function `get_current_user` that validates the JWT cookie.
+- **Step 4.2:** Build POST `/api/v1/projects` to accept a title and concept. Link it to the `current_user`.
+- **Step 4.3:** Build GET `/api/v1/projects` to return only the projects belonging to `current_user`.
+- **Step 4.4:** Build CRUD endpoints for `/api/v1/scenes` (belonging to a specific project).
+- **Step 4.5:** Test all endpoints internally to ensure unauthorized access returns `401 Unauthorized`.
+
+## Phase 5: AI Orchestration & External Integrations
+**Prerequisite Reading:** `docs/blueprint/9_AI_Components.txt`
+
+- **Step 5.1:** Create `backend/services/llm_service.py`. Implement the `AgentOrchestrator` class to interface with the Gemini 1.5 Pro API.
+- **Step 5.2:** Implement the prompt template logic: injecting the user's `concept` and returning strict JSON for scene breakdowns.
+- **Step 5.3:** Create a Celery worker in `backend/worker/tasks.py`.
+- **Step 5.4:** Implement the Replit Sandbox execution task. It should take Python code (generated by Gemini), send it to the Replit API, and poll for the execution `logs` and `exit_code`.
+- **Step 5.5:** Build the POST `/api/v1/scenes/{id}/render` endpoint that triggers this Celery background task and returns a `202 Accepted`.
 
 ## Phase 6: Frontend Foundation & UI System
-- **Files to Read:** 
-  - `docs/blueprint/11_Frontend_Architecture_(Nextjs_14_App_Router).txt`
-  - `docs/blueprint/4_UI_UX_Specification.txt`
-- **Action:** Initialize Next.js App router. Set up Tailwind CSS with the exact colors (`#0A0A0A`, `#E50914`, etc.). Build the reusable UI components (Primary Button, Skeleton Loaders, Execution Log Viewer).
+**Prerequisite Reading:** `docs/blueprint/11_Frontend_Architecture_(Nextjs_14_App_Router).txt`, `docs/blueprint/4_UI_UX_Specification.txt`
 
-## Phase 7: Frontend Pages & Navigation
-- **Files to Read:** 
-  - `docs/blueprint/5_Navigation.txt`
-  - `docs/blueprint/3_Complete_User_Journey.txt`
-- **Action:** Build the actual pages (`/login`, `/dashboard`, `/projects/[id]`). Implement Zustand state management and React Query/Axios hooks to seamlessly connect to the FastAPI backend. Connect the UI to the authentication flow.
+- **Step 6.1:** Open `frontend/tailwind.config.ts`. Extend the theme with exact colors: Background `#0A0A0A`, Surface `#1A1A1A`, Primary `#E50914`.
+- **Step 6.2:** Install required frontend packages: `zustand` (state), `@tanstack/react-query` (data fetching), `axios`, `lucide-react` (icons).
+- **Step 6.3:** Build the `PrimaryButton` component with the specified hover state (`#B80710`, 200ms ease-in-out transition).
+- **Step 6.4:** Build the `SkeletonLoader` component (shimmering `#2A2A2A` to `#3A3A3A`).
+- **Step 6.5:** Build the `ExecutionLogViewer` component (Black background, monospace `#00FF00` text, auto-scroll).
 
-## Phase 8: Refinement, Error Handling & Testing
-- **Files to Read:** 
-  - `docs/blueprint/16_Error_Handling.txt`
-  - `docs/blueprint/13_Performance.txt`
-  - `docs/blueprint/19_Acceptance_Criteria.txt`
-- **Action:** Review the entire codebase. Add optimistic UI updates, loading states, fallback error boundaries, and toast notifications. Ensure the "Replit Sandbox Execution" acceptance criteria are fully met.
+## Phase 7: Frontend Pages & State Management
+**Prerequisite Reading:** `docs/blueprint/5_Navigation.txt`, `docs/blueprint/3_Complete_User_Journey.txt`
+
+- **Step 7.1:** Create `frontend/lib/api.ts` configuring Axios to automatically send credentials (cookies) with every request.
+- **Step 7.2:** Build the `/login` and `/register` pages with form validation. On success, redirect to `/dashboard`.
+- **Step 7.3:** Build the `/dashboard` page. Use React Query to fetch the user's projects. Implement empty states ("Your studio is empty").
+- **Step 7.4:** Build the `/projects/[id]` workspace page. It should have a split pane: Left for the Script/Scenes, Right for the ExecutionLogViewer.
+- **Step 7.5:** Wire the "Generate Script" button to call the LLM backend endpoint and populate the UI with the resulting scenes.
+
+## Phase 8: Polish, Error Handling & Validation
+**Prerequisite Reading:** `docs/blueprint/16_Error_Handling.txt`, `docs/blueprint/13_Performance.txt`, `docs/blueprint/19_Acceptance_Criteria.txt`
+
+- **Step 8.1:** Implement a global Axios interceptor. If an API returns `401`, automatically redirect the user to `/login`.
+- **Step 8.2:** Add toast notifications (e.g., using `react-hot-toast`) for all API success and error states.
+- **Step 8.3:** Implement a polling hook (`useInterval` or React Query `refetchInterval`) to query the backend for Replit Sandbox job status every 3 seconds while a render is pending.
+- **Step 8.4:** Verify all acceptance criteria from the blueprint are met. The application must run flawlessly end-to-end.
