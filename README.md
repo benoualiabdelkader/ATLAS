@@ -1,75 +1,39 @@
-# ATLAS - Agentic Cinematic Production 🎬
+# ATLAS - Master Architectural Blueprint 🏗️
 
-> A fully autonomous AI agent designed for cinematic production, powered by **Gemini Enterprise Agent Platform** and **Replit** for the *Agentic Cinema: The Blockbuster Hackathon*.
+> **FOR REPLIT AI / SYSTEM PROMPT INSTRUCTIONS:**
+> You are an expert Software Engineer and Architect. This repository contains the complete, exhaustive, 20-part software blueprint for "ATLAS - Agentic Cinematic Production". 
+> 
+> Your objective is to read the blueprint documents located in `docs/blueprint/` and generate the entire application (frontend, backend, database, and integrations) with zero assumptions.
 
-![ATLAS Demo Placeholder](screenshots/demo-placeholder.png)
+## 📂 Blueprint Structure
+The complete engineering specification has been meticulously split into 20 precise `.txt` files to ensure systematic and organized processing by an AI agent. 
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Please read them in the following order before writing any code:
 
-## 📌 Problem Statement
-Creating high-quality cinematic content requires executing complex rendering scripts and data processing pipelines. Setting up these execution environments manually creates friction for enterprise media studios scaling their AI pipelines.
+1. `docs/blueprint/1_Product_Vision.txt`
+2. `docs/blueprint/2_Functional_Requirements.txt`
+3. `docs/blueprint/3_Complete_User_Journey.txt`
+4. `docs/blueprint/4_UI_UX_Specification.txt`
+5. `docs/blueprint/5_Navigation.txt`
+6. `docs/blueprint/6_Database_Design_(PostgreSQL).txt`
+7. `docs/blueprint/7_API_Specification.txt`
+8. `docs/blueprint/8_Authentication.txt`
+9. `docs/blueprint/9_AI_Components.txt`
+10. `docs/blueprint/10_Backend_Architecture_(FastAPI).txt`
+11. `docs/blueprint/11_Frontend_Architecture_(Nextjs_14_App_Router).txt`
+12. `docs/blueprint/12_Security.txt`
+13. `docs/blueprint/13_Performance.txt`
+14. `docs/blueprint/14_DevOps.txt`
+15. `docs/blueprint/15_Testing.txt`
+16. `docs/blueprint/16_Error_Handling.txt`
+17. `docs/blueprint/17_File_Structure_(Root_Repository).txt`
+18. `docs/blueprint/18_Implementation_Roadmap.txt`
+19. `docs/blueprint/19_Acceptance_Criteria.txt`
+20. `docs/blueprint/20_Developer_Notes.txt`
 
-## 🚀 Solution Overview
-**ATLAS** is an autonomous AI agent that orchestrates the entire cinematic production pipeline. Built exclusively on **Google Cloud Agent Builder** and powered by **Gemini**, ATLAS acts as the autonomous "Studio Head". It orchestrates story generation and scene breakdowns, and securely executes video rendering scripts in isolated, dynamic sandboxes using our partner platform, **Replit**.
-
-## ✨ Key Features & Hackathon Criteria
-- **Powered by Gemini:** Uses Google's Gemini models for deterministic, multi-step agent reasoning to solve enterprise friction in media pipelines.
-- **Replit Partner Integration:** The Gemini agent dynamically provisions Replit deployments and sandboxes to execute video processing and rendering scripts, demonstrating secure and scalable code execution.
-- **Script to Screen Pipeline:** Automated breakdown of scripts into discrete scenes using Google Cloud Agent Builder.
-- **Open Source:** Fully public repository with an MIT open-source license.
-
-## 🏗️ Architecture
-
-![Architecture Placeholder](screenshots/architecture-placeholder.png)
-*For a detailed breakdown, please see our [Architecture Documentation](docs/architecture.md).*
-
-## 💻 Technology Stack
-- **AI/Agent Framework:** Gemini Enterprise Agent Platform (Google Cloud)
-- **Partner Integration:** Replit (Dynamic sandbox execution environment)
-- **Backend:** Python (FastAPI)
-- **Frontend:** React / Next.js
-- **Deployment:** Google Cloud Run
-
-## 🛠️ Installation & Setup
-
-### Prerequisites
-- Node.js >= 18.x
-- Python >= 3.10
-- Google Cloud CLI (`gcloud`)
-- Replit Account (with API access)
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/benoualiabdelkader/ATLAS.git
-cd ATLAS
-```
-
-### 2. Environment Variables Setup
-Copy the example environment file and configure it with your API keys:
-```bash
-cp .env.example .env
-```
-*Note: Make sure never to commit your `.env` file containing real API keys.*
-
-### 3. Authenticate with Google Cloud
-Ensure your local environment is authenticated to call Google Cloud APIs:
-```bash
-gcloud auth application-default login
-gcloud config set project YOUR_GOOGLE_CLOUD_PROJECT
-```
-
-### 4. Running Locally
-Using Docker Compose:
-```bash
-docker-compose up --build
-```
-Alternatively, follow the detailed setup in [docs/setup.md](docs/setup.md).
-
-## 🎥 The 3-Minute Trailer (Demo)
-*Watch our 3-Minute Demo Video on YouTube: [Link Placeholder]*
-
-## 🤝 Contribution Guidelines
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details. By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).
-
-## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. This license is critical for our Devpost submission.
+## 🚀 Execution Instructions for AI
+1. **READ:** Read ALL 20 blueprint files in `docs/blueprint/` first. Do not skip any files.
+2. **INITIALIZE:** Initialize the project folder structures exactly as specified in `17_File_Structure_(Root_Repository).txt`.
+3. **EXECUTE:** Begin implementation systematically phase by phase as per `18_Implementation_Roadmap.txt`.
+4. **STACK:** Follow the strict tech stack: **Next.js 14, FastAPI, PostgreSQL, Gemini API, Replit Sandbox API**.
+5. **NO SHORTCUTS:** NEVER leave any placeholder code like `// Implement later`. Fully implement the specifications exactly as defined in the blueprint.
